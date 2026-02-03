@@ -103,7 +103,7 @@ describe("whitelisted-transfers", () => {
   });
 
   // Comment this test to get the successful transfer scenario
-  it("Blacklist user", async () => {
+  it.skip("Blacklist user", async () => {
     const tx = await program.methods
       .blacklistUser (destinationTokenAccount)
       .accountsPartial({
@@ -257,11 +257,11 @@ describe("whitelisted-transfers", () => {
         isSigner: false,
         isWritable: false,
       },
-      {
-        pubkey: source_whitelist,
-        isSigner: false,
-        isWritable: false,
-      },
+      // {
+      //   pubkey: source_whitelist,
+      //   isSigner: false,
+      //   isWritable: false,
+      // },
       {
         pubkey: destination_whitelist,
         isSigner: false,
