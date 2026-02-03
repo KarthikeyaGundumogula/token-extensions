@@ -105,7 +105,7 @@ describe("whitelisted-transfers", () => {
   // Comment this test to get the successful transfer scenario
   it.skip("Blacklist user", async () => {
     const tx = await program.methods
-      .blacklistUser (destinationTokenAccount)
+      .blacklistUser(destinationTokenAccount)
       .accountsPartial({
         admin: provider.publicKey,
         whitelistStatus: destination_whitelist,
@@ -209,7 +209,7 @@ describe("whitelisted-transfers", () => {
   });
 
   // Account to store extra accounts required by the transfer hook instruction
-  it("Create ExtraAccountMetaList Account", async () => {
+  it("Init Transfer Hook", async () => {
     const initializeExtraAccountMetaListInstruction = await program.methods
       .initTransferHook()
       .accountsPartial({
@@ -218,23 +218,10 @@ describe("whitelisted-transfers", () => {
         extraAccMetaList: extraAccountMetaListPDA,
         systemProgram: SystemProgram.programId,
       })
-      //.instruction();
       .rpc();
-
-    //const transaction = new Transaction().add(initializeExtraAccountMetaListInstruction);
-
-    //const txSig = await sendAndConfirmTransaction(provider.connection, transaction, [wallet.payer], { skipPreflight: true, commitment: 'confirmed' });
-    // console.log(
-    //   "\nExtraAccountMetaList Account created:",
-    //   extraAccountMetaListPDA.toBase58(),
-    // );
-    // console.log(
-    //   "Transaction Signature:",
-    //   initializeExtraAccountMetaListInstruction,
-    // );
   });
 
-  it("Transfer Hook with Manual Extra Accounts", async () => {
+  it("Transfer Tokens ", async () => {
     const amount = 1 * 10 ** 9;
     const amountBigInt = BigInt(amount);
 
@@ -250,18 +237,12 @@ describe("whitelisted-transfers", () => {
       TOKEN_2022_PROGRAM_ID,
     );
 
-    // Add the extra accounts in the correct order
     transferInstruction.keys.push(
       {
         pubkey: extraAccountMetaListPDA,
         isSigner: false,
         isWritable: false,
       },
-      // {
-      //   pubkey: source_whitelist,
-      //   isSigner: false,
-      //   isWritable: false,
-      // },
       {
         pubkey: destination_whitelist,
         isSigner: false,
