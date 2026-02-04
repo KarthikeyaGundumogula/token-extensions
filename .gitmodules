@@ -1,0 +1,3 @@
+[submodule "escrow-litesvm"]
+	path = escrow-litesvm
+	url = https://github.com/KarthikeyaGundumogula/escrow-litesvm.git
